@@ -66,7 +66,7 @@ export async function renderReportsPage() {
 async function loadReports(period) {
     try {
         // 1. جلب بيانات الرسم البياني
-        const chartRes = await fetch(`http://localhost:3001/api/reports/chart-data?period=${period}`, {
+        const chartRes = await fetch(`https://dz-pos-pro.onrender.com/api/reports/chart-data?period=${period}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const chartData = await chartRes.json();
@@ -77,10 +77,10 @@ async function loadReports(period) {
 
         // 2. جلب التقارير الأخرى
         const [daily, topP, topC, low] = await Promise.all([
-            fetch('http://localhost:3001/api/reports/daily-sales', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
-            fetch('http://localhost:3001/api/reports/top-products?limit=5', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
-            fetch('http://localhost:3001/api/reports/top-customers?limit=5', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
-            fetch('http://localhost:3001/api/reports/low-stock', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json())
+            fetch('https://dz-pos-pro.onrender.com/api/reports/daily-sales', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+            fetch('https://dz-pos-pro.onrender.com/api/reports/top-products?limit=5', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+            fetch('https://dz-pos-pro.onrender.com/api/reports/top-customers?limit=5', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+            fetch('https://dz-pos-pro.onrender.com/api/reports/low-stock', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json())
         ]);
 
         // عرض الإحصائيات
