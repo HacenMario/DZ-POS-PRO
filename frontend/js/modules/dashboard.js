@@ -3,7 +3,7 @@ const token = localStorage.getItem('token');
 
 export async function fetchDashboardStats() {
     try {
-        const res = await fetch('http://localhost:3001/api/reports/dashboard-stats', {
+        const res = await fetch('https://dz-pos-pro.onrender.com/api/reports/dashboard-stats', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
