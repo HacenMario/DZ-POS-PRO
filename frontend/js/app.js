@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             try {
-                // ✅ استخدم API_BASE_URL المستورد
                 const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
                     method: 'POST',
                     headers: {
@@ -86,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const data = await res.json();
 
                 if (res.ok) {
-                    // حفظ التوكن وبيانات المستخدم
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user));
 
@@ -94,10 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         statusMsg.textContent = '✅ تم تسجيل الدخول! جاري التوجيه...';
                     }
 
-                    // التوجيه إلى لوحة التحكم
                     window.location.href = 'dashboard.html';
                 } else {
-                    // فشل تسجيل الدخول (بيانات خاطئة أو مستخدم غير موجود)
                     if (statusMsg) {
                         statusMsg.textContent = '❌ ' + (data.message || 'فشل تسجيل الدخول');
                     }
