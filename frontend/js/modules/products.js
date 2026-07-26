@@ -39,10 +39,8 @@ export async function renderProductsPage() {
     attachEvents();
 }
 
-// ✅ جلب جميع المنتجات دفعة واحدة
 async function fetchAllProducts() {
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/products?limit=10000`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -60,7 +58,6 @@ async function fetchAllProducts() {
     }
 }
 
-// ✅ دالة البحث (تصفية محلية)
 function searchProducts(query) {
     const filtered = productsData.filter(p => {
         const name = (p.displayName || p.name?.ar || '').toLowerCase();
@@ -76,7 +73,6 @@ function searchProducts(query) {
     }
 }
 
-// ✅ عرض الجدول مع تنسيق الأرقام (رقمين بعد الفاصلة)
 function renderTable(data = null) {
     const lang = localStorage.getItem('lang') || 'ar';
     const trans = translations[lang] || {};
@@ -96,9 +92,7 @@ function renderTable(data = null) {
         const index = start + i + 1;
         const name = p.displayName || p.name?.ar || 'غير محدد';
         const cat = p.category?.displayName || p.category?.name?.ar || '-';
-        // ✅ تنسيق السعر إلى رقمين عشريين
         const formattedPrice = p.price ? p.price.toFixed(2) : '0.00';
-        // ✅ تنسيق timbre إلى رقمين عشريين (اختياري)
         const formattedTimbre = p.timbre ? p.timbre.toFixed(2) : '0.00';
         html += `<tr><td>${index}</td><td><strong>${name}</strong></td><td>${formattedPrice} دج</td><td class="${p.stock <= p.minStock ? 'danger' : ''}">${p.stock}</td><td>${cat}</td><td>${formattedTimbre}</td><td><button class="btn-edit" data-id="${p._id}">✏️</button> <button class="btn-delete" data-id="${p._id}">🗑️</button></td></tr>`;
     });
@@ -143,7 +137,6 @@ function attachEvents() {
 
 async function fetchCategoriesForSelect() {
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/categories?limit=1000`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -200,7 +193,6 @@ async function openModal(product = null) {
             isActive: document.getElementById('isActive').value === 'true'
         };
         try {
-            // ✅ استخدم API_BASE_URL
             const url = id ? `${API_BASE_URL}/api/products/${id}` : `${API_BASE_URL}/api/products`;
             const res = await fetch(url, {
                 method: id ? 'PUT' : 'POST',
@@ -227,7 +219,6 @@ async function deleteProduct(id, name) {
     const trans = translations[lang] || {};
     if (!confirm(`${trans.confirmDelete||'حذف'} "${name}"؟`)) return;
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/products/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         if (data.success) {
