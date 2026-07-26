@@ -80,16 +80,13 @@ class OfflineDB {
     }
 }
 
-// إنشاء نسخة واحدة عالمية
 const offlineDB = new OfflineDB();
 await offlineDB.init();
 
-// التحقق من حالة الاتصال
 function isOnline() {
     return navigator.onLine;
 }
 
-// مزامنة المبيعات المعلقة عند استعادة الاتصال
 window.addEventListener('online', async function syncPendingSales() {
     console.log('🔄 الاتصال恢复了، بدء المزامنة...');
     const pending = await offlineDB.getPendingSales();
@@ -98,7 +95,6 @@ window.addEventListener('online', async function syncPendingSales() {
 
     for (const item of pending) {
         try {
-            // ✅ استخدم API_BASE_URL
             const res = await fetch(`${API_BASE_URL}/api/sales`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
