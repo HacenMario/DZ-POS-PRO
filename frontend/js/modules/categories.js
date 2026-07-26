@@ -40,7 +40,6 @@ export async function renderCategoriesPage() {
 
 async function fetchCategories(search = '') {
     try {
-        // ✅ استخدم API_BASE_URL
         let url = `${API_BASE_URL}/api/categories?page=${currentPage}&limit=${perPage}`;
         if (search) url += `&search=${encodeURIComponent(search)}`;
         const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -95,7 +94,6 @@ async function openModal(category = null) {
     const isEdit = !!category;
     let allCats = [];
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/categories?limit=1000`, { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         if (data.success) allCats = data.categories || [];
@@ -135,7 +133,6 @@ async function openModal(category = null) {
             isActive: document.getElementById('catIsActive').value === 'true'
         };
         try {
-            // ✅ استخدم API_BASE_URL
             const url = id ? `${API_BASE_URL}/api/categories/${id}` : `${API_BASE_URL}/api/categories`;
             const res = await fetch(url, {
                 method: id ? 'PUT' : 'POST',
@@ -160,7 +157,6 @@ async function deleteCategory(id, name) {
     const trans = translations[lang] || {};
     if (!confirm(`${trans.confirmDelete||'حذف'} "${name}"؟`)) return;
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/categories/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         if (data.success) {
