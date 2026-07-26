@@ -958,6 +958,31 @@ async function checkSession() {
 }
 
 // ========================================
+// تحميل الفاتورة بصيغة PDF
+// ========================================
+export async function downloadInvoiceById(invoiceId) {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/sales/${invoiceId}/pdf`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error('فشل تحميل الفاتورة');
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `invoice-${invoiceId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        Toast.success('✅ تم تحميل الفاتورة بنجاح');
+    } catch (error) {
+        console.error('❌ فشل تحميل الفاتورة:', error);
+        Toast.error('❌ فشل تحميل الفاتورة: ' + error.message);
+    }
+}
+
+// ========================================
 // ربط الأحداث
 // ========================================
 function bindEvents() {
@@ -1081,29 +1106,5 @@ function bindEvents() {
                 } else Toast.error('❌ ' + data.message);
             } catch (e) { Toast.error('❌ خطأ في الاتصال'); }
         });
-    }
-}
-// ========================================
-// تحميل الفاتورة بصيغة PDF
-// ========================================
-export async function downloadInvoiceById(invoiceId) {
-    try {
-        const res = await fetch(`${API_BASE_URL}/api/sales/${invoiceId}/pdf`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!res.ok) throw new Error('فشل تحميل الفاتورة');
-        const blob = await res.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `invoice-${invoiceId}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-        Toast.success('✅ تم تحميل الفاتورة بنجاح');
-    } catch (error) {
-        console.error('❌ فشل تحميل الفاتورة:', error);
-        Toast.error('❌ فشل تحميل الفاتورة: ' + error.message);
     }
 }
