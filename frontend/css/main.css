@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg-body);
+    color: var(--text-primary);
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container { width: 100%; max-width: 420px; padding: 1.5rem; }
+.login-card {
+    background: var(--bg-card);
+    padding: 2rem 1.8rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s;
+}
+.login-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+.logo-area h1 { font-size: 1.8rem; color: var(--accent); }
+.subtitle { font-size: 0.8rem; color: var(--text-secondary); display: block; }
+.header-actions { display: flex; gap: 0.5rem; align-items: center; }
+.icon-btn {
+    background: none; border: none; font-size: 1.5rem; cursor: pointer;
+    padding: 0.2rem 0.5rem; border-radius: 8px;
+    transition: background 0.3s;
+}
+.icon-btn:hover { background: var(--border-color); }
+.lang-select {
+    padding: 0.3rem 0.6rem; border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-body); color: var(--text-primary);
+}
+
+.form-group { margin-bottom: 1.2rem; }
+.form-group label { display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; }
+.form-group input {
+    width: 100%; padding: 0.7rem 1rem;
+    border-radius: 8px; border: 1px solid var(--border-color);
+    background: var(--bg-body); color: var(--text-primary);
+    transition: border 0.3s;
+}
+.form-group input:focus { outline: none; border-color: var(--accent); }
+
+.btn-primary {
+    background: var(--accent); color: #fff;
+    border: none; padding: 0.8rem; border-radius: 8px;
+    font-weight: 700; font-size: 1rem; cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+}
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-block { width: 100%; }
+
+.login-footer {
+    margin-top: 1.5rem; display: flex;
+    justify-content: space-between; font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+.status-msg { color: var(--accent); font-weight: 500; }

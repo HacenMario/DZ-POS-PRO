@@ -1,0 +1,10 @@
+[data-theme="dark"] {
+    --bg-body: #0a0a0f;
+    --bg-card: #1a1a24;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #fbbf24;
+    --accent-hover: #f59e0b;
+    --shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
