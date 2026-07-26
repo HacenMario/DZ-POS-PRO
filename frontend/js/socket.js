@@ -1,4 +1,7 @@
 // frontend/js/socket.js
+
+import API_BASE_URL from './config.js';
+
 let socket = null;
 
 function initSocket() {
@@ -7,7 +10,8 @@ function initSocket() {
 
     if (!token || !user.id) return;
 
-    socket = io('http://localhost:3001', {
+    // ✅ استخدم API_BASE_URL بدلاً من localhost:3001
+    socket = io(API_BASE_URL, {
         auth: { token }
     });
 
