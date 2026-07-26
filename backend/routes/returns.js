@@ -1,0 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const returnController = require('../controllers/returnController');
+const authMiddleware = require('../middleware/auth');
+const roleMiddleware = require('../middleware/role');
+
+router.get('/', authMiddleware, roleMiddleware('admin', 'manager'), returnController.getReturns);
+router.get('/:id', authMiddleware, roleMiddleware('admin', 'manager'), returnController.getReturnById);
+
+router.post('/', authMiddleware, roleMiddleware('admin', 'manager'), returnController.createReturn);
+
+module.exports = router;
