@@ -1,0 +1,60 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>DZ POS PRO</title>
+    <!-- الخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+    <!-- ملفات CSS -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/theme-light.css" />
+    <link rel="stylesheet" href="css/theme-dark.css" />
+</head>
+<body>
+    <div id="app" class="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo-area">
+                        <h1 data-i18n="appName">DZ POS PRO</h1>
+                        <span class="subtitle" data-i18n="slogan">نظام تسيير محترف</span>
+                    </div>
+                    <div class="header-actions">
+                        <!-- تبديل الثيم -->
+                        <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">🌙</button>
+                        <!-- اختيار اللغة -->
+                        <select id="langSelect" class="lang-select">
+                            <option value="ar">🇸🇦 العربية</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="fr">🇫🇷 Français</option>
+                        </select>
+                    </div>
+                </div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label data-i18n="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" placeholder="admin@dzpos.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="password">كلمة المرور</label>
+                        <input type="password" id="password" placeholder="••••••••" required />
+                    </div>
+                    <button type="submit" class="btn-primary btn-block" data-i18n="loginBtn">تسجيل الدخول</button>
+                </form>
+
+                <div class="login-footer">
+                    <span data-i18n="version">الإصدار 1.0.0</span>
+                    <span id="statusMessage" class="status-msg"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ملفات JavaScript -->
+    <script src="js/i18n.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

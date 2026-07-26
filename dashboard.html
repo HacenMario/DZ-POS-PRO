@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DZ POS PRO - لوحة التحكم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/theme-light.css" />
+    <link rel="stylesheet" href="css/theme-dark.css" />
+    <link rel="stylesheet" href="css/pages.css" />
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/num-words/1.2.0/num-words.min.js"></script>
+<script src="js/toast.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.socket.io/4.8.3/socket.io.min.js" 
+        integrity="sha384-kzavj5fiMwLKzzD1f8S7TeoVIEi7uKHvbTA3ueZkrzYq75pNQUiUi6Dy98Q3fxb0" 
+        crossorigin="anonymous"></script>
+<script src="js/socket.js"></script>
+<script>
+    // تهيئة Socket بعد تسجيل الدخول
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('token')) {
+            initSocket();
+        }
+    });
+</script>
+<body>
+    <div id="app" class="dashboard-layout">
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>DZ POS PRO</h2>
+                <button id="closeSidebar" class="icon-btn">✕</button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="active" data-page="dashboard"><span>📊</span> <span data-i18n="dashboard">لوحة التحكم</span></a></li>
+                    <li><a href="#" data-page="products"><span>📦</span> <span data-i18n="products">المنتجات</span></a></li>
+                    <li><a href="#" data-page="categories"><span>🏷️</span> <span data-i18n="categories">الفئات</span></a></li>
+                    <li><a href="#" data-page="customers"><span>👥</span> <span data-i18n="customers">العملاء</span></a></li>
+                    <li><a href="#" data-page="sales"><span>🧾</span> <span data-i18n="sales">المبيعات</span></a></li>
+                    <li><a href="#" data-page="invoices"><span>🧾</span> <span data-i18n="invoices">الفواتير</span></a></li>
+                    <li><a href="#" data-page="reports"><span>📈</span> <span data-i18n="reports">التقارير</span></a></li>
+                    <li><a href="#" data-page="settings"><span>⚙️</span> <span data-i18n="settings">الإعدادات</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-danger btn-block"><span>🚪</span> <span data-i18n="logout">تسجيل الخروج</span></button>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- رأس الصفحة -->
+            <header class="top-header">
+                <button id="openSidebar" class="icon-btn">☰</button>
+                <div class="header-title">
+                    <h1 id="pageTitle" data-i18n="dashboard">لوحة التحكم</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="themeToggle" class="icon-btn">🌙</button>
+                    <select id="langSelect" class="lang-select">
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="fr">🇫🇷 Français</option>
+                    </select>
+                    <span class="user-badge" id="userNameDisplay">مدير النظام</span>
+                </div>
+            </header>
+
+            <div class="offline-banner" id="offlineBanner">📴 أنت غير متصل بالإنترنت. سيتم حفظ البيانات محلياً.</div>
+
+            <!-- منطقة المحتوى الديناميكي -->
+            <section class="content-area" id="contentArea">
+                <!-- سيتم تحميل المحتوى هنا بواسطة JavaScript -->
+                <div id="pageContent">
+                    <!-- محتوى لوحة التحكم سيظهر هنا -->
+                    <div class="stats-grid" id="statsGrid">
+                        <div class="stat-card"><div class="stat-icon">📦</div><div><h3 id="statProducts">0</h3><p data-i18n="totalProducts">إجمالي المنتجات</p></div></div>
+                        <div class="stat-card"><div class="stat-icon">👥</div><div><h3 id="statCustomers">0</h3><p data-i18n="totalCustomers">إجمالي العملاء</p></div></div>
+                        <div class="stat-card"><div class="stat-icon">🧾</div><div><h3 id="statSalesToday">0</h3><p data-i18n="salesToday">مبيعات اليوم</p></div></div>
+                        <div class="stat-card"><div class="stat-icon">💰</div><div><h3 id="statRevenueToday">0 دج</h3><p data-i18n="revenueToday">إيرادات اليوم</p></div></div>
+                    </div>
+                    <div class="low-stock-section">
+                        <h3 data-i18n="lowStockAlert">⚠️ تنبيه المخزون المنخفض</h3>
+                        <ul id="lowStockList" class="stock-list"><li data-i18n="loading">جاري التحميل...</li></ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ملفات JavaScript -->
+    <script src="js/i18n.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#f59e0b',
+                    secondary: '#1e293b',
+                    accent: '#3b82f6',
+                    danger: '#ef4444',
+                    success: '#22c55e'
+                },
+                fontFamily: {
+                    arabic: ['Tajawal', 'sans-serif']
+                }
+            }
+        }
+    }
+</script>
+</html>
