@@ -37,7 +37,7 @@ export async function renderCategoriesPage() {
 
 async function fetchCategories(search = '') {
     try {
-        let url = `http://localhost:3001/api/categories?page=${currentPage}&limit=${perPage}`;
+        let url = `https://dz-pos-pro.onrender.com/api/categories?page=${currentPage}&limit=${perPage}`;
         if (search) url += `&search=${encodeURIComponent(search)}`;
         const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
@@ -91,7 +91,7 @@ async function openModal(category = null) {
     const isEdit = !!category;
     let allCats = [];
     try {
-        const res = await fetch('http://localhost:3001/api/categories?limit=1000', { headers: { 'Authorization': `Bearer ${token}` } });
+        const res = await fetch('https://dz-pos-pro.onrender.com/api/categories?limit=1000', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         if (data.success) allCats = data.categories || [];
     } catch(e) {}
@@ -130,7 +130,7 @@ async function openModal(category = null) {
             isActive: document.getElementById('catIsActive').value === 'true'
         };
         try {
-            const url = id ? `http://localhost:3001/api/categories/${id}` : 'http://localhost:3001/api/categories';
+            const url = id ? `https://dz-pos-pro.onrender.com/api/categories/${id}` : 'https://dz-pos-pro.onrender.com/api/categories';
             const res = await fetch(url, {
                 method: id ? 'PUT' : 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -154,7 +154,7 @@ async function deleteCategory(id, name) {
     const trans = translations[lang] || {};
     if (!confirm(`${trans.confirmDelete||'حذف'} "${name}"؟`)) return;
     try {
-        const res = await fetch(`http://localhost:3001/api/categories/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const res = await fetch(`https://dz-pos-pro.onrender.com/api/categories/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         if (data.success) {
             alert(trans.categoryDeleted || '✅ تم الحذف');
