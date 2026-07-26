@@ -4,13 +4,11 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const { getTranslation } = require('./config/i18n');
 const path = require('path');
-
+const http = require('http');
+const socketIo = require('socket.io');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
-});
 
 // ✅ الاتصال بقاعدة البيانات
 connectDB();
@@ -91,10 +89,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-// في server.js، بعد تعريف app وقبل تشغيل الخادم
-const http = require('http');
-const socketIo = require('socket.io');
-
+// ✅ إنشاء خادم HTTP واحد وربط Socket.io به
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
@@ -128,10 +123,9 @@ global.broadcastNotification = (notification) => {
     io.emit('notification', notification);
 };
 
-// ✅ تشغيل الخادم
-
-server.listen(PORT, () => {
-    console.log(`🚀 DZ POS PRO يعمل على http://localhost:${PORT}`);
+// ✅ تشغيل الخادم باستخدام server.listen (وليس app.listen)
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 DZ POS PRO يعمل على http://0.0.0.0:${PORT}`);
     console.log(`📡 الوضع: ${process.env.NODE_ENV || 'development'}`);
     console.log(`🔌 Socket.io يعمل على نفس المنفذ`);
     console.log(`🌐 اللغات المدعومة: العربية، الإنجليزية، الفرنسية`);
