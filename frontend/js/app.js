@@ -1,3 +1,5 @@
+// frontend/js/app.js
+
 import API_BASE_URL from './config.js';
 
 // ========================================
@@ -72,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             try {
-                // ✅ استخدم المسار النسبي (يتوافق مع منفذ الخادم تلقائياً)
-const res = await fetch(`${API_BASE_URL}/api/auth/login`, { ... });
+                // ✅ استخدم API_BASE_URL المستورد
+                const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
