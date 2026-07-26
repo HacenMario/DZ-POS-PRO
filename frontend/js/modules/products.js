@@ -1,4 +1,7 @@
 // modules/products.js
+
+import API_BASE_URL from '../config.js';
+
 const token = localStorage.getItem('token');
 let productsData = [];
 let currentPage = 1;
@@ -39,7 +42,8 @@ export async function renderProductsPage() {
 // ✅ جلب جميع المنتجات دفعة واحدة
 async function fetchAllProducts() {
     try {
-        const res = await fetch('/api/products?limit=10000', {
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/products?limit=10000`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -139,7 +143,8 @@ function attachEvents() {
 
 async function fetchCategoriesForSelect() {
     try {
-        const res = await fetch('/api/categories?limit=1000', {
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/categories?limit=1000`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -190,12 +195,13 @@ async function openModal(product = null) {
             minStock: parseInt(document.getElementById('minStock').value) || 5,
             barcode: document.getElementById('barcode').value.trim() || undefined,
             unit: document.getElementById('unit').value.trim() || 'قطعة',
-                    timbre: parseFloat(document.getElementById('timbre').value) || 0,
+            timbre: parseFloat(document.getElementById('timbre').value) || 0,
             category: document.getElementById('category').value || null,
             isActive: document.getElementById('isActive').value === 'true'
         };
         try {
-            const url = id ? `/api/products/${id}` : '/api/products';
+            // ✅ استخدم API_BASE_URL
+            const url = id ? `${API_BASE_URL}/api/products/${id}` : `${API_BASE_URL}/api/products`;
             const res = await fetch(url, {
                 method: id ? 'PUT' : 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -221,7 +227,8 @@ async function deleteProduct(id, name) {
     const trans = translations[lang] || {};
     if (!confirm(`${trans.confirmDelete||'حذف'} "${name}"؟`)) return;
     try {
-        const res = await fetch(`/api/products/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/products/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
         if (data.success) {
             alert(trans.productDeleted || '✅ تم الحذف');
