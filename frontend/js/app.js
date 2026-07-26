@@ -1,3 +1,5 @@
+import API_BASE_URL from './config.js';
+
 // ========================================
 // مراقبة حالة الاتصال (عبر الإنترنت/غير متصل)
 // ========================================
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             try {
                 // ✅ استخدم المسار النسبي (يتوافق مع منفذ الخادم تلقائياً)
-                const res = await fetch('/api/auth/login', {
+const res = await fetch(`${API_BASE_URL}/api/auth/login`, { ... });
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
