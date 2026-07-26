@@ -2,7 +2,7 @@
 
 import API_BASE_URL from '../config.js';
 
-const token = window.token || localStorage.getItem('token');
+const token = localStorage.getItem('token');
 let cart = [];
 let selectedCustomerId = null;
 let selectedCustomerName = '';
@@ -31,7 +31,7 @@ export async function renderSalesPage() {
 
     content.innerHTML = `
         <style>
-            /* أنماط خاصة بالنافذة المنبثقة لضمان ظهورها في المنتصف */
+            /* أنماط خاصة للنافذة المنبثقة لضمان ظهورها في المنتصف */
             #customerModal {
                 display: none;
                 position: fixed;
@@ -292,7 +292,6 @@ export async function renderSalesPage() {
 // ========================================
 async function fetchProducts() {
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/products?limit=1000`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -303,7 +302,6 @@ async function fetchProducts() {
 
 async function fetchCategories() {
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/categories?limit=100`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -314,7 +312,6 @@ async function fetchCategories() {
 
 async function fetchStoreSettings() {
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/settings`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -325,7 +322,6 @@ async function fetchStoreSettings() {
 
 async function fetchCustomers() {
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/customers?limit=500`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -624,7 +620,6 @@ async function completeSale() {
     };
 
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/sales`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -926,7 +921,6 @@ function printInvoice() {
 // ========================================
 async function checkSession() {
     try {
-        // ✅ استخدم API_BASE_URL
         const res = await fetch(`${API_BASE_URL}/api/sessions/current`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -1041,7 +1035,6 @@ function bindEvents() {
             const balance = prompt('الرصيد الافتتاحي (دج):', '0');
             if (balance === null) return;
             try {
-                // ✅ استخدم API_BASE_URL
                 const res = await fetch(`${API_BASE_URL}/api/sessions/open`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -1067,7 +1060,6 @@ function bindEvents() {
                 const actualCash = prompt('الرصيد الفعلي في الصندوق (دج):', '0');
                 if (actualCash === null) return;
 
-                // ✅ استخدم API_BASE_URL
                 const closeRes = await fetch(`${API_BASE_URL}/api/sessions/close`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
