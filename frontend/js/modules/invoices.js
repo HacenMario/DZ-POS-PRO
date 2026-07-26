@@ -1,4 +1,8 @@
 // modules/invoices.js
+
+import API_BASE_URL from '../config.js';
+import { downloadInvoiceById } from './sales.js';
+
 const token = localStorage.getItem('token');
 let invoicesData = [];
 let currentPage = 1;
@@ -28,7 +32,7 @@ export async function renderInvoicesPage() {
 
 async function fetchInvoices() {
     try {
-        const res = await fetch('/api/sales?limit=1000', {
+        const res = await fetch(`${API_BASE_URL}/api/sales?limit=1000`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -114,8 +118,7 @@ function attachEvents() {
         btn.addEventListener('click', async function() {
             const id = this.dataset.id;
             try {
-                const salesModule = await import('./sales.js');
-                await salesModule.downloadInvoiceById(id);
+                await downloadInvoiceById(id);
             } catch (e) {
                 console.error('❌ فشل تحميل PDF:', e);
                 alert('❌ فشل تحميل الفاتورة');
@@ -123,22 +126,13 @@ function attachEvents() {
         });
     });
 
-    // أزرار الطباعة
+    // أزرار الطباعة (نفس وظيفة التحميل مع تنبيه)
     document.querySelectorAll('.btn-print-invoice').forEach(btn => {
         btn.addEventListener('click', async function() {
             const id = this.dataset.id;
             try {
-                const salesModule = await import('./sales.js');
-                const saleRes = await fetch(`/api/sales/${id}`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const data = await saleRes.json();
-                if (data.success && data.sale) {
-                    await salesModule.downloadInvoiceById(id);
-                    alert('✅ تم تحميل الفاتورة، يمكنك طباعتها من ملف PDF');
-                } else {
-                    alert('❌ فشل جلب بيانات الفاتورة');
-                }
+                await downloadInvoiceById(id);
+                alert('✅ تم تحميل الفاتورة، يمكنك طباعتها من ملف PDF');
             } catch (e) {
                 console.error('❌ فشل الطباعة:', e);
                 alert('❌ فشل طباعة الفاتورة');
