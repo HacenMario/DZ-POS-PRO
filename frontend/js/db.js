@@ -1,4 +1,7 @@
 // frontend/js/db.js
+
+import API_BASE_URL from './config.js';
+
 class OfflineDB {
     constructor() {
         this.dbName = 'DZPOSPRO_DB';
@@ -95,7 +98,8 @@ window.addEventListener('online', async function syncPendingSales() {
 
     for (const item of pending) {
         try {
-            const res = await fetch('http://localhost:3001/api/sales', {
+            // ✅ استخدم API_BASE_URL
+            const res = await fetch(`${API_BASE_URL}/api/sales`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(item.data)
