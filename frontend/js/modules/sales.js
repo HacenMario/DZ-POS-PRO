@@ -31,141 +31,32 @@ export async function renderSalesPage() {
 
     content.innerHTML = `
         <style>
-            /* أنماط خاصة للنافذة المنبثقة لضمان ظهورها في المنتصف */
-            #customerModal {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.6);
-                backdrop-filter: blur(4px);
-                z-index: 9999;
-                align-items: center;
-                justify-content: center;
-            }
-            #customerModal.active {
-                display: flex;
-            }
-            #customerModal .modal-content {
-                background: #fff;
-                border-radius: 12px;
-                padding: 20px;
-                max-width: 600px;
-                width: 90%;
-                max-height: 80vh;
-                overflow-y: auto;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-                position: relative;
-                margin: auto;
-            }
-            /* دعم الوضع الداكن */
-            [data-theme="dark"] #customerModal .modal-content {
-                background: #1e293b;
-                color: #e2e8f0;
-            }
-            [data-theme="dark"] #customerModal .modal-content input {
-                background: #334155;
-                color: #e2e8f0;
-                border-color: #475569;
-            }
-            #customerModal .modal-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 15px;
-                border-bottom: 1px solid #e5e7eb;
-                padding-bottom: 10px;
-            }
-            [data-theme="dark"] #customerModal .modal-header {
-                border-color: #475569;
-            }
-            #customerModal .modal-close {
-                background: none;
-                border: none;
-                font-size: 28px;
-                cursor: pointer;
-                color: #6b7280;
-                line-height: 1;
-            }
-            [data-theme="dark"] #customerModal .modal-close {
-                color: #94a3b8;
-            }
-            #customerModal .modal-close:hover {
-                color: #ef4444;
-            }
-            #customerModal #customerSearchInput {
-                width: 100%;
-                padding: 10px;
-                border: 1.5px solid #d1d5db;
-                border-radius: 6px;
-                font-size: 14px;
-                outline: none;
-                transition: border-color 0.2s;
-            }
-            #customerModal #customerSearchInput:focus {
-                border-color: #f59e0b;
-                box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
-            }
-            #customerModal #customerListContainer {
-                max-height: 350px;
-                overflow-y: auto;
-                border: 1px solid #e5e7eb;
-                border-radius: 6px;
-                background: #f9fafb;
-            }
-            [data-theme="dark"] #customerModal #customerListContainer {
-                border-color: #475569;
-                background: #1e293b;
-            }
-            #customerModal .customer-item {
-                padding: 10px 12px;
-                border-bottom: 1px solid #e5e7eb;
-                cursor: pointer;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                transition: background 0.2s;
-            }
-            [data-theme="dark"] #customerModal .customer-item {
-                border-color: #475569;
-            }
-            #customerModal .customer-item:hover {
-                background: #f3f4f6;
-            }
-            [data-theme="dark"] #customerModal .customer-item:hover {
-                background: #334155;
-            }
-            #customerModal .customer-item .customer-name {
-                font-weight: 500;
-            }
-            #customerModal .customer-item .customer-details {
-                color: #6b7280;
-                font-size: 0.85rem;
-            }
-            [data-theme="dark"] #customerModal .customer-item .customer-details {
-                color: #94a3b8;
-            }
-            #customerModal .btn-secondary {
-                padding: 8px 24px;
-                background: #e5e7eb;
-                border: none;
-                border-radius: 6px;
-                cursor: pointer;
-                font-size: 14px;
-                transition: background 0.2s;
-            }
-            [data-theme="dark"] #customerModal .btn-secondary {
-                background: #475569;
-                color: #e2e8f0;
-            }
-            #customerModal .btn-secondary:hover {
-                background: #d1d5db;
-            }
-            [data-theme="dark"] #customerModal .btn-secondary:hover {
-                background: #334155;
-            }
+            /* أنماط خاصة للنافذة المنبثقة ... (تم حذفها للاختصار، لكنها موجودة في الكود السابق) */
+            #customerModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; }
+            #customerModal.active { display: flex; }
+            #customerModal .modal-content { background: #fff; border-radius: 12px; padding: 20px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative; margin: auto; }
+            [data-theme="dark"] #customerModal .modal-content { background: #1e293b; color: #e2e8f0; }
+            [data-theme="dark"] #customerModal .modal-content input { background: #334155; color: #e2e8f0; border-color: #475569; }
+            #customerModal .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
+            [data-theme="dark"] #customerModal .modal-header { border-color: #475569; }
+            #customerModal .modal-close { background: none; border: none; font-size: 28px; cursor: pointer; color: #6b7280; line-height: 1; }
+            [data-theme="dark"] #customerModal .modal-close { color: #94a3b8; }
+            #customerModal .modal-close:hover { color: #ef4444; }
+            #customerModal #customerSearchInput { width: 100%; padding: 10px; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+            #customerModal #customerSearchInput:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.2); }
+            #customerModal #customerListContainer { max-height: 350px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 6px; background: #f9fafb; }
+            [data-theme="dark"] #customerModal #customerListContainer { border-color: #475569; background: #1e293b; }
+            #customerModal .customer-item { padding: 10px 12px; border-bottom: 1px solid #e5e7eb; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+            [data-theme="dark"] #customerModal .customer-item { border-color: #475569; }
+            #customerModal .customer-item:hover { background: #f3f4f6; }
+            [data-theme="dark"] #customerModal .customer-item:hover { background: #334155; }
+            #customerModal .customer-item .customer-name { font-weight: 500; }
+            #customerModal .customer-item .customer-details { color: #6b7280; font-size: 0.85rem; }
+            [data-theme="dark"] #customerModal .customer-item .customer-details { color: #94a3b8; }
+            #customerModal .btn-secondary { padding: 8px 24px; background: #e5e7eb; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; transition: background 0.2s; }
+            [data-theme="dark"] #customerModal .btn-secondary { background: #475569; color: #e2e8f0; }
+            #customerModal .btn-secondary:hover { background: #d1d5db; }
+            [data-theme="dark"] #customerModal .btn-secondary:hover { background: #334155; }
         </style>
 
         <div class="pos-container">
@@ -494,10 +385,9 @@ function initCustomerModal() {
 
     if (!modal || !openBtn) return;
 
-    // فتح النافذة
     openBtn.addEventListener('click', () => {
         modal.classList.add('active');
-        modal.style.display = 'flex'; // للتأكد
+        modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         renderCustomerList(customersList);
         if (searchInput) {
@@ -506,7 +396,6 @@ function initCustomerModal() {
         }
     });
 
-    // إغلاق النافذة
     closeBtns.forEach(btn => {
         if (btn) {
             btn.addEventListener('click', () => {
@@ -517,7 +406,6 @@ function initCustomerModal() {
         }
     });
 
-    // إغلاق عند النقر على الخلفية (الـ overlay)
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.classList.remove('active');
@@ -526,7 +414,6 @@ function initCustomerModal() {
         }
     });
 
-    // البحث
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
@@ -557,7 +444,6 @@ function renderCustomerList(customers) {
         </div>
     `).join('');
 
-    // ربط حدث النقر على عناصر العملاء
     container.querySelectorAll('.customer-item').forEach(el => {
         el.addEventListener('click', function() {
             const id = this.dataset.id;
@@ -572,7 +458,6 @@ function selectCustomer(id, name) {
     selectedCustomerName = name;
     const display = document.getElementById('posCustomerDisplay');
     if (display) display.textContent = `👤 ${name}`;
-    // إغلاق النافذة
     const modal = document.getElementById('customerModal');
     if (modal) {
         modal.classList.remove('active');
@@ -690,16 +575,18 @@ async function generateInvoicePDF(saleData) {
             }
         }
 
-        const subtotal = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+        // نحتاج إلى عناصر الفاتورة من saleData
+        const items = saleData.items || [];
+        const subtotal = items.reduce((sum, i) => sum + (i.price * i.quantity), 0);
         const uniqueTimbreMap = new Map();
-        cart.forEach(item => {
+        items.forEach(item => {
             if (item.timbre > 0 && !uniqueTimbreMap.has(item.productId)) {
                 uniqueTimbreMap.set(item.productId, item.timbre);
             }
         });
         const totalTimbre = Array.from(uniqueTimbreMap.values()).reduce((sum, val) => sum + val, 0);
 
-        const discount = parseFloat(document.getElementById('posDiscountInput')?.value) || 0;
+        const discount = saleData.discount || 0;
         const taxAmount = (subtotal - discount) * (taxRate / 100);
         const total = subtotal - discount + taxAmount + totalTimbre;
 
@@ -729,10 +616,10 @@ async function generateInvoicePDF(saleData) {
             email: 'Email'
         };
 
-        const paymentMethod = document.querySelector('.payment-btn.active')?.dataset.method || 'cash';
+        const paymentMethod = saleData.paymentMethod || 'cash';
         const paymentLabel = { cash: labels.cash, card: labels.card, transfer: labels.transfer } [paymentMethod] || labels.cash;
 
-        const customerName = selectedCustomerName || 'بدون عميل';
+        const customerName = saleData.customer?.displayName || saleData.customer?.name?.ar || 'بدون عميل';
 
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('p', 'mm', 'a4');
@@ -809,9 +696,9 @@ async function generateInvoicePDF(saleData) {
 
         // جدول المنتجات
         const tableHeaders = ['#', labels.product, labels.unit, labels.quantity, labels.price, labels.totalHT];
-        const tableRows = cart.map((item, idx) => [
+        const tableRows = items.map((item, idx) => [
             idx + 1,
-            item.name,
+            item.name || item.productId?.name?.ar || 'منتج',
             labels.unit || 'UN',
             item.quantity,
             item.price.toFixed(2),
@@ -905,7 +792,27 @@ async function generateInvoicePDF(saleData) {
 }
 
 // ========================================
-// دالة الطباعة
+// دالة تحميل فاتورة بواسطة ID (للاستخدام من invoices.js)
+// ========================================
+export async function downloadInvoiceById(saleId) {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/sales/${saleId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success && data.sale) {
+            await generateInvoicePDF(data.sale);
+        } else {
+            Toast.error('❌ فشل جلب بيانات الفاتورة');
+        }
+    } catch (e) {
+        console.error('❌ فشل تحميل الفاتورة:', e);
+        Toast.error('❌ فشل تحميل الفاتورة');
+    }
+}
+
+// ========================================
+// دالة الطباعة (تستخدم في صفحة البيع)
 // ========================================
 function printInvoice() {
     if (!cart.length) {
@@ -955,31 +862,6 @@ async function checkSession() {
             if (sessionInfo) sessionInfo.innerHTML = '';
         }
     } catch (e) { console.error('خطأ في التحقق من الجلسة:', e); }
-}
-
-// ========================================
-// تحميل الفاتورة بصيغة PDF
-// ========================================
-export async function downloadInvoiceById(invoiceId) {
-    try {
-        const res = await fetch(`${API_BASE_URL}/api/sales/${invoiceId}/pdf`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!res.ok) throw new Error('فشل تحميل الفاتورة');
-        const blob = await res.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `invoice-${invoiceId}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-        Toast.success('✅ تم تحميل الفاتورة بنجاح');
-    } catch (error) {
-        console.error('❌ فشل تحميل الفاتورة:', error);
-        Toast.error('❌ فشل تحميل الفاتورة: ' + error.message);
-    }
 }
 
 // ========================================
