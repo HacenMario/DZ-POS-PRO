@@ -1,4 +1,7 @@
 // modules/sales.js
+
+import API_BASE_URL from '../config.js';
+
 const token = window.token || localStorage.getItem('token');
 let cart = [];
 let selectedCustomerId = null;
@@ -28,7 +31,7 @@ export async function renderSalesPage() {
 
     content.innerHTML = `
         <style>
-            /* أنماط خاصة للنافذة المنبثقة لضمان ظهورها في المنتصف */
+            /* أنماط خاصة بالنافذة المنبثقة لضمان ظهورها في المنتصف */
             #customerModal {
                 display: none;
                 position: fixed;
@@ -289,7 +292,8 @@ export async function renderSalesPage() {
 // ========================================
 async function fetchProducts() {
     try {
-        const res = await fetch('/api/products?limit=1000', {
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/products?limit=1000`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -299,7 +303,8 @@ async function fetchProducts() {
 
 async function fetchCategories() {
     try {
-        const res = await fetch('/api/categories?limit=100', {
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/categories?limit=100`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -309,7 +314,8 @@ async function fetchCategories() {
 
 async function fetchStoreSettings() {
     try {
-        const res = await fetch('/api/settings', {
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/settings`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -319,7 +325,8 @@ async function fetchStoreSettings() {
 
 async function fetchCustomers() {
     try {
-        const res = await fetch('/api/customers?limit=500', {
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/customers?limit=500`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -617,7 +624,8 @@ async function completeSale() {
     };
 
     try {
-        const res = await fetch('/api/sales', {
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/sales`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify(saleData)
@@ -918,7 +926,8 @@ function printInvoice() {
 // ========================================
 async function checkSession() {
     try {
-        const res = await fetch('/api/sessions/current', {
+        // ✅ استخدم API_BASE_URL
+        const res = await fetch(`${API_BASE_URL}/api/sessions/current`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -1032,7 +1041,8 @@ function bindEvents() {
             const balance = prompt('الرصيد الافتتاحي (دج):', '0');
             if (balance === null) return;
             try {
-                const res = await fetch('/api/sessions/open', {
+                // ✅ استخدم API_BASE_URL
+                const res = await fetch(`${API_BASE_URL}/api/sessions/open`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify({ openingBalance: parseFloat(balance) || 0 })
@@ -1057,7 +1067,8 @@ function bindEvents() {
                 const actualCash = prompt('الرصيد الفعلي في الصندوق (دج):', '0');
                 if (actualCash === null) return;
 
-                const closeRes = await fetch('/api/sessions/close', {
+                // ✅ استخدم API_BASE_URL
+                const closeRes = await fetch(`${API_BASE_URL}/api/sessions/close`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify({ actualCash: parseFloat(actualCash) || 0 })
